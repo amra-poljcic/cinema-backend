@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(name = "hall")
 public class HallEntity {
 
+
     @Id
     @GeneratedValue
     private UUID id;
