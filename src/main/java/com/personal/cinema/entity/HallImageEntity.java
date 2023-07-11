@@ -1,6 +1,6 @@
 package com.personal.cinema.entity;
 
-import com.personal.cinema.model.HallImage;
+import com.personal.cinema.model.Image;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -58,11 +58,11 @@ public class HallImageEntity {
         this.hall = hall;
     }
 
-    public HallImage toDomainModel() {
-        return new HallImage(id, url);
+    public Image toDomainModel() {
+        return new Image(id, url);
     }
 
-    public static HallImageEntity fromDomainModel(final HallImage hallImage) {
+    public static HallImageEntity fromDomainModel(final Image hallImage) {
         return new HallImageEntity(hallImage.getId(), hallImage.getUrl(), null);
     }
 }

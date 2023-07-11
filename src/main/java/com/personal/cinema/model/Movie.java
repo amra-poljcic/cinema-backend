@@ -12,7 +12,7 @@ public class Movie {
     private final Integer reviewCount;
     private final String length;
     private final int year;
-    private final List<MovieImage> images;
+    private final List<Image> images;
     private final List<MovieGenre> genres;
 
     public Movie(final UUID id,
@@ -22,7 +22,7 @@ public class Movie {
                  final Integer reviewCount,
                  final String length,
                  final int year,
-                 final List<MovieImage> images,
+                 final List<Image> images,
                  final List<MovieGenre> genres) {
         this.id = id;
         this.name = name;
@@ -51,7 +51,7 @@ public class Movie {
         return length;
     }
 
-    public List<MovieImage> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 

@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,7 +68,7 @@ public class CinemaEntity {
         return new CinemaEntity(
                 cinema.getId(),
                 cinema.getName(),
-                cinema.getImages().stream().map(CinemaImageEntity::fromDomainModel).toList()
+                Collections.emptyList()
         );
     }
 }

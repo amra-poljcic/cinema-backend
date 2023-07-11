@@ -1,6 +1,6 @@
 package com.personal.cinema.entity;
 
-import com.personal.cinema.model.CinemaImage;
+import com.personal.cinema.model.Image;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -57,11 +57,11 @@ public class CinemaImageEntity {
         this.cinema = cinema;
     }
 
-    public CinemaImage toDomainModel() {
-        return new CinemaImage(id, url, cinema.toDomainModel());
+    public Image toDomainModel() {
+        return new Image(id, url);
     }
 
-    public static CinemaImageEntity fromDomainModel(final CinemaImage cinemaImage) {
-        return new CinemaImageEntity(cinemaImage.getId(), cinemaImage.getUrl(), null);
+    public static CinemaImageEntity fromDomainModel(final Image image, final CinemaEntity cinemaEntity) {
+        return new CinemaImageEntity(image.getId(), image.getUrl(), cinemaEntity);
     }
 }

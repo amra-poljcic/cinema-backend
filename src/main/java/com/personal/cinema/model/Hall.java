@@ -8,13 +8,13 @@ public class Hall {
     private final String name;
     private final String description;
     private final int capacity;
-    private final List<HallImage> images;
+    private final List<Image> images;
 
     public Hall(final UUID id,
                 final String name,
                 final String description,
                 final int capacity,
-                final List<HallImage> images) {
+                final List<Image> images) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -38,7 +38,7 @@ public class Hall {
         return id;
     }
 
-    public List<HallImage> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 }
