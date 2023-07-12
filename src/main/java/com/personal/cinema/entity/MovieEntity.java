@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,8 +34,8 @@ public class MovieEntity {
     @Column(name = "review_count")
     private Integer reviewCount;
 
-    @Column(name = "length", nullable = false)
-    private String length;
+    @Column(name = "duration", nullable = false)
+    private Duration duration;
 
     @Column(name = "year")
     private int year;
@@ -53,7 +54,7 @@ public class MovieEntity {
                        final String description,
                        final Double reviewAverage,
                        final Integer reviewCount,
-                       final String length,
+                       final Duration duration,
                        final int year,
                        final List<MovieImageEntity> images,
                        final List<MovieGenreEntity> genres) {
@@ -62,7 +63,7 @@ public class MovieEntity {
         this.description = description;
         this.reviewAverage = reviewAverage;
         this.reviewCount = reviewCount;
-        this.length = length;
+        this.duration = duration;
         this.year = year;
         this.images = images;
         this.genres = genres;
@@ -108,12 +109,12 @@ public class MovieEntity {
         this.reviewCount = reviewCount;
     }
 
-    public String getLength() {
-        return length;
+    public Duration getDuration() {
+        return duration;
     }
 
-    public void setLength(final String length) {
-        this.length = length;
+    public void setDuration(final Duration duration) {
+        this.duration = duration;
     }
 
     public int getYear() {
@@ -147,7 +148,7 @@ public class MovieEntity {
                 description,
                 reviewAverage,
                 reviewCount,
-                length,
+                duration,
                 year,
                 images.stream().map(MovieImageEntity::toDomainModel).toList(),
                 genres.stream().map(MovieGenreEntity::toDomainModel).toList()
@@ -161,7 +162,7 @@ public class MovieEntity {
                 movie.getDescription(),
                 movie.getReviewAverage().orElse(0D),
                 movie.getReviewCount().orElse(0),
-                movie.getLength(),
+                movie.getDuration(),
                 movie.getYear(),
                 movie.getImages().stream().map(MovieImageEntity::fromDomainModel).toList(),
                 movie.getGenres().stream().map(MovieGenreEntity::fromDomainModel).toList()

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS movie (
     description TEXT NOT NULL,
     review_average FLOAT,
     review_count INTEGER,
-    length TEXT NOT NULL,
+    duration BIGINT NOT NULL,
     year INTEGER
 );
 

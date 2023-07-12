@@ -1,5 +1,6 @@
 package com.personal.cinema.model;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,7 +11,7 @@ public class Movie {
     private final String description;
     private final Double reviewAverage;
     private final Integer reviewCount;
-    private final String length;
+    private final Duration duration;
     private final int year;
     private final List<Image> images;
     private final List<MovieGenre> genres;
@@ -20,7 +21,7 @@ public class Movie {
                  final String description,
                  final Double reviewAverage,
                  final Integer reviewCount,
-                 final String length,
+                 final Duration duration,
                  final int year,
                  final List<Image> images,
                  final List<MovieGenre> genres) {
@@ -29,7 +30,7 @@ public class Movie {
         this.description = description;
         this.reviewAverage = reviewAverage;
         this.reviewCount = reviewCount;
-        this.length = length;
+        this.duration = duration;
         this.year = year;
         this.images = images;
         this.genres = genres;
@@ -47,8 +48,12 @@ public class Movie {
         return description;
     }
 
-    public String getLength() {
-        return length;
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public List<Image> getImages() {
@@ -70,7 +75,7 @@ public class Movie {
                 this.description,
                 reviewAverage,
                 this.reviewCount,
-                this.length,
+                this.duration,
                 this.year,
                 this.images,
                 this.genres
@@ -88,14 +93,10 @@ public class Movie {
                 this.description,
                 this.reviewAverage,
                 reviewCount,
-                this.length,
+                this.duration,
                 this.year,
                 this.images,
                 this.genres
         );
-    }
-
-    public int getYear() {
-        return year;
     }
 }
