@@ -41,4 +41,8 @@ public class Hall {
     public List<Image> getImages() {
         return images;
     }
+
+    public Hall withImages(final List<Image> images) {
+        return new Hall(this.id, this.name, this.description, this.capacity, images);
+    }
 }

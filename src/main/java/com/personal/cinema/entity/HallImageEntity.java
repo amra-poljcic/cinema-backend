@@ -62,7 +62,7 @@ public class HallImageEntity {
         return new Image(id, url);
     }
 
-    public static HallImageEntity fromDomainModel(final Image hallImage) {
-        return new HallImageEntity(hallImage.getId(), hallImage.getUrl(), null);
+    public static HallImageEntity fromDomainModel(final Image hallImage, final HallEntity hallEntity) {
+        return new HallImageEntity(hallImage.getId(), hallImage.getUrl(), hallEntity);
     }
 }

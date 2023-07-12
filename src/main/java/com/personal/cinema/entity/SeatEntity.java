@@ -22,7 +22,7 @@ public class SeatEntity {
     @Column(name = "row", nullable = false)
     private String row;
 
-    @Column(name = "column", nullable = false)
+    @Column(name = "\"column\"", nullable = false)
     private String column;
 
     @ManyToOne

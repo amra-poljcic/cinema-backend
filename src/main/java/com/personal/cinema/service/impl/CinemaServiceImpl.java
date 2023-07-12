@@ -8,6 +8,7 @@ import com.personal.cinema.repository.CinemaImageRepository;
 import com.personal.cinema.repository.CinemaRepository;
 import com.personal.cinema.service.api.CinemaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class CinemaServiceImpl implements CinemaService {
         this.cinemaImageRepository = cinemaImageRepository;
     }
 
+    @Transactional
     @Override
     public Cinema save(final Cinema cinema) {
         final CinemaEntity cinemaEntity = cinemaRepository.save(CinemaEntity.fromDomainModel(cinema));

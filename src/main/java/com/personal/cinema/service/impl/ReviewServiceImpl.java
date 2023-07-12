@@ -3,13 +3,11 @@ package com.personal.cinema.service.impl;
 import com.personal.cinema.entity.ReviewEntity;
 import com.personal.cinema.model.Movie;
 import com.personal.cinema.model.Review;
-import com.personal.cinema.model.User;
 import com.personal.cinema.repository.ReviewRepository;
-import com.personal.cinema.request.ReviewRequest;
 import com.personal.cinema.service.api.MovieService;
 import com.personal.cinema.service.api.ReviewService;
-import com.personal.cinema.service.api.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,24 +17,20 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final MovieService movieService;
-    private final UserService userService;
 
-    public ReviewServiceImpl(final ReviewRepository reviewRepository, final MovieService movieService, final UserService userService) {
+    public ReviewServiceImpl(final ReviewRepository reviewRepository, final MovieService movieService) {
         this.reviewRepository = reviewRepository;
         this.movieService = movieService;
-        this.userService = userService;
     }
 
+    @Transactional
     @Override
-    public Review save(final ReviewRequest reviewRequest) {
-        final Movie movie = movieService.findById(reviewRequest.movieId())
-                .orElseThrow(IllegalArgumentException::new);
-        final User user = userService.findById(reviewRequest.userId())
-                .orElseThrow(IllegalAccessError::new);
+    public Review save(final Review review) {
+        final Movie movie = review.getMovie();
 
         final double reviewAverage = movie.getReviewAverage().orElse(0D);
         final int reviewCount = movie.getReviewCount().orElse(0);
-        final double newReviewAverage = ((reviewCount * reviewAverage) + reviewRequest.grade()) / (reviewCount + 1);
+        final double newReviewAverage = ((reviewCount * reviewAverage) + review.getGrade()) / (reviewCount + 1);
         final int newReviewCount = reviewCount + 1;
 
         movieService.save(movie
@@ -44,7 +38,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .withReviewCount(newReviewCount)
         );
 
-        final ReviewEntity reviewEntity = ReviewEntity.fromDomainModel(Review.fromRequest(reviewRequest, movie, user));
+        final ReviewEntity reviewEntity = ReviewEntity.fromDomainModel(review);
         return reviewRepository.save(reviewEntity).toDomainModel();
     }
 
