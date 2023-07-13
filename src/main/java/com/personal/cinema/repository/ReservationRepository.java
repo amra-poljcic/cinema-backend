@@ -8,4 +8,8 @@ import java.util.UUID;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, UUID> {
+
+    long countByScheduleIdAndUserId(UUID scheduleId, UUID userId);
+
+    boolean existsBySeatId(UUID id);
 }

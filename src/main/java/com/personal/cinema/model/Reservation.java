@@ -1,5 +1,7 @@
 package com.personal.cinema.model;
 
+import com.personal.cinema.request.ReservationRequest;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -10,6 +12,14 @@ public class Reservation {
     private final Seat seat;
     private final Schedule schedule;
     private final User user;
+
+    public Reservation(final boolean completed,
+                       final Instant date,
+                       final Seat seat,
+                       final Schedule schedule,
+                       final User user) {
+        this(null, completed, date, seat, schedule, user);
+    }
 
     public Reservation(final UUID id,
                        final boolean completed,
@@ -47,5 +57,18 @@ public class Reservation {
 
     public User getUser() {
         return user;
+    }
+
+    public static Reservation fromRequest(final ReservationRequest reservationRequest,
+                                          final Seat seat,
+                                          final Schedule schedule,
+                                          final User user) {
+        return new Reservation(
+                false,
+                reservationRequest.date(),
+                seat,
+                schedule,
+                user
+        );
     }
 }

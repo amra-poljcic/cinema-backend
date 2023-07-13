@@ -20,8 +20,11 @@ public class ScheduleEntity {
     @GeneratedValue
     private UUID id;
 
-    @Column
-    private Instant date;
+    @Column(name = "start_time")
+    private Instant startTime;
+
+    @Column(name = "end_time")
+    private Instant endTime;
 
     @Column(nullable = false)
     private double price;
@@ -38,12 +41,14 @@ public class ScheduleEntity {
     }
 
     public ScheduleEntity(final UUID id,
-                          final Instant date,
+                          final Instant startTime,
+                          final Instant endTime,
                           final double price,
                           final MovieEntity movie,
                           final HallEntity hall) {
         this.id = id;
-        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.price = price;
         this.movie = movie;
         this.hall = hall;
@@ -57,12 +62,20 @@ public class ScheduleEntity {
         this.id = id;
     }
 
-    public Instant getDate() {
-        return date;
+    public Instant getStartTime() {
+        return startTime;
     }
 
-    public void setDate(final Instant date) {
-        this.date = date;
+    public void setStartTime(final Instant startTime) {
+        this.startTime = startTime;
+    }
+
+    public Instant getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(final Instant endTime) {
+        this.endTime = endTime;
     }
 
     public double getPrice() {
@@ -90,13 +103,14 @@ public class ScheduleEntity {
     }
 
     public Schedule toDomainModel() {
-        return new Schedule(id, date, price, movie.toDomainModal(), hall.toDomainModel());
+        return new Schedule(id, startTime, endTime, price, movie.toDomainModal(), hall.toDomainModel());
     }
 
     public static ScheduleEntity fromDomainModel(Schedule schedule) {
         return new ScheduleEntity(
                 schedule.getId(),
-                schedule.getDate(),
+                schedule.getStartTime(),
+                schedule.getEndTime(),
                 schedule.getPrice(),
                 MovieEntity.fromDomainModel(schedule.getMovie()),
                 HallEntity.fromDomainModel(schedule.getHall())

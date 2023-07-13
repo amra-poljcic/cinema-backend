@@ -7,6 +7,7 @@ import com.personal.cinema.service.api.SeatService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,5 +43,10 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public void deleteById(final UUID id) {
         seatRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Seat> findById(final UUID id) {
+        return seatRepository.findById(id).map(SeatEntity::toDomainModel);
     }
 }

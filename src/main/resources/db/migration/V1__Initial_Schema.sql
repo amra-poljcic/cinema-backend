@@ -84,12 +84,15 @@ CREATE TABLE IF NOT EXISTS schedule (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     movie_id UUID,
     hall_id UUID,
-    date TIMESTAMP,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
     price NUMERIC NOT NULL,
     CONSTRAINT fk_schedule_movie
         FOREIGN KEY (movie_id) REFERENCES movie(id),
     CONSTRAINT fk_schedule_hall
-        FOREIGN KEY (hall_id) REFERENCES hall(id)
+        FOREIGN KEY (hall_id) REFERENCES hall(id),
+    CONSTRAINT check_start_time_less_than_end_time
+        CHECK ( start_time < end_time )
 );
 
 CREATE TABLE IF NOT EXISTS seat (
