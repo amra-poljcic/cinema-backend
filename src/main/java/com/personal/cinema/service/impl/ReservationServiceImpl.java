@@ -2,10 +2,12 @@ package com.personal.cinema.service.impl;
 
 import com.personal.cinema.entity.ReservationEntity;
 import com.personal.cinema.model.Reservation;
+import com.personal.cinema.model.Schedule;
 import com.personal.cinema.repository.ReservationRepository;
 import com.personal.cinema.service.api.ReservationService;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,6 +47,14 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void deleteById(final UUID id) {
+        final Schedule schedule = reservationRepository.findById(id)
+                .map(r -> r.getSchedule().toDomainModel())
+                .orElseThrow(() -> new IllegalArgumentException("Reservation does not exist"));
+
+        if (schedule.getEndTime().isBefore(Instant.now())) {
+            throw new IllegalArgumentException("It is not possible to delete past reservations");
+        }
+
         reservationRepository.deleteById(id);
     }
 }

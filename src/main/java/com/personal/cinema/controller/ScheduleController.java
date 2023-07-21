@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,8 +55,9 @@ public class ScheduleController {
             );
         }
 
-        if (scheduleRequest.startTime().isAfter(scheduleRequest.endTime())) {
-            throw new IllegalArgumentException();
+        if (scheduleRequest.startTime().isAfter(scheduleRequest.endTime())
+            || scheduleRequest.startTime().isAfter(Instant.now())) {
+            throw new IllegalArgumentException("Invalid schedule start time");
         }
 
         final Hall hall = hallService.findById(scheduleRequest.hallId())

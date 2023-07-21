@@ -3,3 +3,7 @@ spring:
         url: jdbc:postgresql://localhost:5432/postgres
         username: postgres
         password: postgres
+
+properties:
+    scheduler:
+        user-ban-check: 6h
