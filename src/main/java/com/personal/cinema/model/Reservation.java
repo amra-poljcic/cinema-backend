@@ -65,7 +65,7 @@ public class Reservation {
                                           final User user) {
         return new Reservation(
                 false,
-                reservationRequest.date(),
+                Instant.now(),
                 seat,
                 schedule,
                 user

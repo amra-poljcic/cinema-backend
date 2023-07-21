@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS reservation (
    seat_id UUID,
    schedule_id UUID,
    user_id UUID,
-   date TIMESTAMP NOT NULL,
+   date TIMESTAMP NOT NULL DEFAULT now(),
    completed BOOLEAN DEFAULT FALSE,
    CONSTRAINT fk_reservation_seat
        FOREIGN KEY (seat_id) REFERENCES seat(id),
