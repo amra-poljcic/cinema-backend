@@ -7,6 +7,7 @@ import com.personal.cinema.request.ReviewRequest;
 import com.personal.cinema.service.api.MovieService;
 import com.personal.cinema.service.api.ReviewService;
 import com.personal.cinema.service.api.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +36,13 @@ public class ReviewController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('review:read')")
     public List<Review> list() {
         return reviewService.list();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('review:add')")
     public Review save(@RequestBody final ReviewRequest reviewRequest) {
         final Movie movie = movieService.findById(reviewRequest.movieId())
                 .orElseThrow(IllegalArgumentException::new);
@@ -50,6 +53,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('review:delete')")
     public void deleteById(@PathVariable final UUID id) {
         reviewService.deleteById(id);
     }

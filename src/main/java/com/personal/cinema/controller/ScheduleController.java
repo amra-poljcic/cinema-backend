@@ -7,6 +7,7 @@ import com.personal.cinema.request.ScheduleRequest;
 import com.personal.cinema.service.api.HallService;
 import com.personal.cinema.service.api.MovieService;
 import com.personal.cinema.service.api.ScheduleService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +36,13 @@ public class ScheduleController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('schedule:read')")
     public List<Schedule> list() {
         return scheduleService.list();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('schedule:add')")
     public Schedule save(@RequestBody final ScheduleRequest rawScheduleRequest) {
         final Movie movie = movieService.findById(rawScheduleRequest.movieId())
                 .orElseThrow(IllegalAccessError::new);
@@ -67,6 +70,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('schedule:delete')")
     public void deleteById(@PathVariable final UUID id) {
         scheduleService.deleteById(id);
     }

@@ -5,6 +5,7 @@ import com.personal.cinema.model.Seat;
 import com.personal.cinema.request.SeatRequest;
 import com.personal.cinema.service.api.HallService;
 import com.personal.cinema.service.api.SeatService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,21 +30,25 @@ public class HallController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('hall:read')")
     public List<Hall> list() {
         return hallService.list();
     }
 
     @GetMapping("{id}/seat")
+    @PreAuthorize("hasAuthority('seat:read')")
     public List<Seat> listSeats(@PathVariable final UUID id) {
         return seatService.list(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('hall:add')")
     public Hall save(@RequestBody final Hall hall) {
         return hallService.save(hall);
     }
 
     @PostMapping("{id}/seat")
+    @PreAuthorize("hasAuthority('seat:add')")
     public Seat saveSeat(@PathVariable final UUID id, @RequestBody final SeatRequest seatRequest) {
         final Hall hall = hallService.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
@@ -53,6 +58,7 @@ public class HallController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('hall:delete')")
     public void deleteById(@PathVariable final UUID id) {
         hallService.deleteById(id);
     }

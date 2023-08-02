@@ -9,6 +9,7 @@ import com.personal.cinema.service.api.ReservationService;
 import com.personal.cinema.service.api.ScheduleService;
 import com.personal.cinema.service.api.SeatService;
 import com.personal.cinema.service.api.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,11 +41,13 @@ public class ReservationController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('reservation:read')")
     public List<Reservation> list() {
         return reservationService.list();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('reservation:add')")
     public Reservation save(@RequestBody final ReservationRequest reservationRequest) {
         final Seat seat = seatService.findById(reservationRequest.seatId())
                 .orElseThrow(IllegalArgumentException::new);
@@ -57,6 +60,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('reservation:delete')")
     public void deleteById(@PathVariable final UUID id) {
         reservationService.deleteById(id);
     }

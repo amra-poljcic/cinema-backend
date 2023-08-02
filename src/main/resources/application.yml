@@ -3,7 +3,27 @@ spring:
         url: jdbc:postgresql://localhost:5432/postgres
         username: postgres
         password: postgres
+    profiles:
+        active: security
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    audiences: ${AUTH0_AUDIENCE}
 
 properties:
     scheduler:
         user-ban-check: 6h
+    external:
+        auth0:
+            audience: ${AUTH0_AUDIENCE}
+            issuer: https://${AUTH0_DOMAIN}/
+springdoc:
+    oAuthFlow:
+        authorizationUrl: https://${AUTH0_DOMAIN}authorize?audience=${AUTH0_AUDIENCE}
+        tokenUrl: https://${AUTH0_DOMAIN}/oauth/token
+    swagger-ui:
+        oauth:
+            clientId: ${AUTH0_CLIENT_ID}
+            client-secret: ${AUTH0_CLIENT_SECRET}
+
